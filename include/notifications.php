@@ -78,14 +78,16 @@ function bp_group_documents_email_notification($document) {
         //first get the admin & moderator emails
         if (count($bp->groups->current_group->admins)) {
             foreach ($bp->groups->current_group->admins as $user) {
-                if ('no' == get_user_meta($user->user_id, 'notification_group_documents_upload_mod'))
+		$mod_notif_prefs = get_user_meta($user->user_id, 'notification_group_documents_upload_mod'); 
+                if (in_array('no', $mod_notif_prefs))
                     continue;
                 $emails[$user->user_id] = $user->user_email;
             }
         }
         if (count($bp->groups->current_group->mods)) {
             foreach ($bp->groups->current_group->mods as $user) {
-                if ('no' == get_user_meta($user->user_id, 'notification_group_documents_upload_mod'))
+		$mod_notif_prefs = get_user_meta($user->user_id, 'notification_group_documents_upload_mod'); 
+                if (in_array('no', $mod_notif_prefs)) 
                     continue;
                 if (!in_array($user->user_email, $emails)) {
                     $emails[$user->user_id] = $user->user_email;
@@ -96,7 +98,9 @@ function bp_group_documents_email_notification($document) {
         //now get all member emails, checking to make sure not to send any emails twice
         $user_ids = BP_Groups_Member::get_group_member_ids($bp->groups->current_group->id);
         foreach ((array) $user_ids as $user_id) {
-            if ('no' == get_user_meta($user_id, 'notification_group_documents_upload_member'))
+
+	    $member_notif_prefs = get_user_meta($user_id, 'notification_group_documents_upload_member'); 
+            if (in_array('no', $member_notif_prefs))
                 continue;
 
             $ud = bp_core_get_core_userdata($user_id);
@@ -125,6 +129,10 @@ To download the new document directly: %s
 
         // Set up and send the message
         $to = $current_email;
+
+	//debugging. 
+	//write_log("Sending email notification with message: "); 
+	//write_log($message); 
 
         wp_mail($to, $subject, $message);
         unset($to, $message);
