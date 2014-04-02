@@ -62,9 +62,10 @@ a.bp-group-documents-icon{
     font-size: 90%;
 }
 
+/* disabling this because it conflicts with cbox theme
 li#nav-documents-groups-li,li#nav-documents-personal-li {
    background: url(../images/documents-stack_16x16.png) no-repeat 87% 52%;
-}
+} */ 
 
 .bp_group_documents_question{
 border:solid 1px #DEDEDE;
