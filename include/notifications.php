@@ -130,10 +130,6 @@ To download the new document directly: %s
         // Set up and send the message
         $to = $current_email;
 
-	//debugging. 
-	//write_log("Sending email notification with message: "); 
-	//write_log($message); 
-
         wp_mail($to, $subject, $message);
         unset($to, $message);
     } //end foreach
