@@ -81,13 +81,8 @@ function bp_group_documents_display_content() {
                                     <?php else: ?>
                                         <label><?php _e( 'Document:' , 'bp-group-documents' ) ; ?>:</label><span><?php echo $template->name ; ?></span>
 
-                                        <?php
-                                        endif ;
-                                        if ( BP_GROUP_DOCUMENTS_FEATURED ) {
-                                            ?>
-                                            <label class="bp-group-documents-featured-label"><?php _e( 'Featured Document' , 'bp-group-documents' ) ; ?>: </label>
-                                            <input type="checkbox" name="bp_group_documents_featured" class="bp-group-documents-featured" value="1" <?php if ( $template->featured ) echo 'checked="checked"' ; ?>/>
-                                        <?php } ?>
+                                        <?php endif; ?> 
+
                                         <div id="document-detail-clear" class="clear"></div>
                                         <div class="bp-group-documents-document-info">
                                             <label><?php _e( 'Display Name:' , 'bp-group-documents' ) ; ?></label>
