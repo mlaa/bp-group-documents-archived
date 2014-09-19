@@ -181,19 +181,6 @@ function bp_group_documents_display_content() {
                     </form>
                 </div>
 
-                <?php if ( $template->document_list && count( $template->document_list >= 1 ) ) { ?>
-                    <div class="pagination no-ajax">
-                        <div id="group-documents-page-count" class="pag-count">
-                            <?php $template->pagination_count() ; ?>
-                        </div>
-                        <?php if ( $template->show_pagination() ) { ?>
-                            <div id="group-documents-page-links" class="pagination-links">
-                                <?php $template->pagination_links() ; ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                <?php } ?>
-
                 </div> <!-- // subnav -->
             <?php
             if ( $template->document_list && count( $template->document_list >= 1 ) ) {
@@ -285,6 +272,19 @@ function bp_group_documents_display_content() {
                             <?php }
 			//-------------------------------------------------------------------DETAIL VIEW--
 				?> 
+
+                <?php if ( $template->document_list && count( $template->document_list >= 1 ) ) { ?>
+                    <div class="pagination no-ajax">
+                        <div id="group-documents-page-count" class="pag-count">
+                            <?php $template->pagination_count() ; ?>
+                        </div>
+                        <?php if ( $template->show_pagination() ) { ?>
+                            <div id="group-documents-page-links" class="pagination-links">
+                                <?php $template->pagination_links() ; ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
 
 
                     </div><!--end #group-documents-->
