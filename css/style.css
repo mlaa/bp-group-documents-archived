@@ -80,3 +80,9 @@ li#nav-documents-groups-li a:before {
        content: "L"; 
 }        
 
+/* nudge upload button */ 
+#bp-group-documents-upload-button { 
+	margin-left: 15px; 
+	position: relative; 
+	top: -5px; 
+} 

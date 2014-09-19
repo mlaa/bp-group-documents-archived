@@ -54,11 +54,102 @@ function bp_group_documents_display_content() {
     ?>
 
         <div id="bp-group-documents">
+			<?php if ( $template->show_detail ) {
+                            if ( $template->operation == 'add' ) {
+                                ?>
+                                <div id="bp-group-documents-upload-new">
+                                <?php } else { ?>
+                                    <div id="bp-group-documents-edit"><a name="edit-document-form"></a>
+                                    <?php } ?>
+
+                            <h3><?php echo $template->header ?></h3>
+
+                                        <form method="post" id="bp-group-documents-form" class="standard-form" action="<?php echo $template->action_link ; ?>" enctype="multipart/form-data">
+                                    <input type="hidden" name="bp_group_documents_operation" value="<?php echo $template->operation ; ?>" />
+                                    <input type="hidden" name="bp_group_documents_id" value="<?php echo $template->id ; ?>" />
+                                    <?php if ( $template->operation == 'add' ) : ?>
+                                        <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo return_bytes( ini_get( 'post_max_size' ) ) ; ?>" />
+                                        <label class="bp-group-documents-file-label"><?php _e( 'Choose File:' , 'bp-group-documents' ) ; ?></label>
+                                        <input type="file" name="bp_group_documents_file" class="bp-group-documents-file" />
+                                        <p class="bp-group-documents-valid-file-formats">
+                                            <?php
+                                            $valid_file_formats1 = get_option( 'bp_group_documents_valid_file_formats' ) ;
+                                            _e( 'Valid File Formats' , 'bp-group-documents' ) ;
+                                            echo ':<br />' . str_replace( ',' , ', ' , $valid_file_formats1 ) ;
+                                            ?>
+                                        </p>
+                                    <?php else: ?>
+                                        <label><?php _e( 'Document:' , 'bp-group-documents' ) ; ?>:</label><span><?php echo $template->name ; ?></span>
+
+                                        <?php
+                                        endif ;
+                                        if ( BP_GROUP_DOCUMENTS_FEATURED ) {
+                                            ?>
+                                            <label class="bp-group-documents-featured-label"><?php _e( 'Featured Document' , 'bp-group-documents' ) ; ?>: </label>
+                                            <input type="checkbox" name="bp_group_documents_featured" class="bp-group-documents-featured" value="1" <?php if ( $template->featured ) echo 'checked="checked"' ; ?>/>
+                                        <?php } ?>
+                                        <div id="document-detail-clear" class="clear"></div>
+                                        <div class="bp-group-documents-document-info">
+                                            <label><?php _e( 'Display Name:' , 'bp-group-documents' ) ; ?></label>
+                                            <input type="text" name="bp_group_documents_name" id="bp-group-documents-name" value="<?php echo $template->name ?>" />
+                                            <?php if ( BP_GROUP_DOCUMENTS_SHOW_DESCRIPTIONS ) { ?>
+                                                <label><?php _e( 'Description:' , 'bp-group-documents' ) ; ?></label>
+                                                <?php
+                                                if ( BP_GROUP_DOCUMENTS_ALLOW_WP_EDITOR ) :
+                                                    if ( function_exists( 'wp_editor' ) ) {
+                                                        wp_editor( $template->description , 'bp_group_documents_description' , array (
+                                                            'media_buttons' => false ,
+                                                            'dfw' => false ) ) ;
+                                                    } else
+                                                        the_editor( $template->description , 'bp_group_documents_description' , 'bp_group_documents_description' , false ) ;
+                                                else:
+                                                    ?>
+                                    <textarea name="bp_group_documents_description" id="bp-group-documents-description" rows="5" cols="100"><?php echo esc_textarea( $template->description ) ; ?></textarea>
+                                                <?php
+                                                endif ;
+                                            }
+                                            ?>
+                                    </div>
+
+                                    <?php if ( get_option( 'bp_group_documents_use_categories' ) ) { ?>
+                                        <div class="bp-group-documents-category-wrapper">
+                                            <label><?php _e( 'Category:' , 'bp-group-documents' ) ; ?></label>
+                                            <?php
+                                            $group_categories = $template->get_group_categories( false ) ;
+                                            if ( count( $group_categories ) > 0 ):
+                                                ?>
+                                                <div class="bp-group-documents-category-list">
+                                                    <ul>
+                                                        <?php foreach ( $template->get_group_categories( false ) as $category ) { ?>
+                                                            <li><input type="checkbox" name="bp_group_documents_categories[]" value="<?php echo $category->term_id ; ?>" <?php
+                                                                if ( $template->doc_in_category( $category->term_id ) )
+                                                                    echo 'checked="checked"' ;
+                                                                ?> /><?php echo $category->name ; ?></li>
+                                                            <?php } ?>
+                                                    </ul>
+                                                </div>
+                                            <?php endif ; ?>
+                                            <input type="text" name="bp_group_documents_new_category" class="bp-group-documents-new-category" />
+                                        </div><!-- .bp-group-documents-category-wrapper -->
+                                    <?php } ?>
+                                    <?php wp_nonce_field( 'bp_group_document_save_' . $template->operation , 'bp_group_document_save' ) ; ?>
+                                    <input type="submit" class="button" value="<?php _e( 'Save' , 'bp-group-documents' ) ; ?>" />
+                                </form>
+                                </div><!--end #post-new-topic-->
+
         <?php do_action( 'template_notices' ) // (error/success feedback)        ?>
         <h3><?php
             echo get_option( 'bp_group_documents_nav_page_name' ) . ' ' . __( 'List' , 'bp-group-documents' ) ;
             ?></h3>
             <?php //-----------------------------------------------------------------------LIST VIEW--       ?>
+
+                            <?php if ( $template->operation == 'add' ) { ?>
+                                <a class="button" id="bp-group-documents-upload-button" href="" style="display:none;"><?php _e( 'Upload a New Document' , 'bp-group-documents' ) ; ?></a>
+                                <?php
+                            }
+                        }
+                        ?>
+
             <div class="item-list-tabs no-ajax" id="subnav" role="navigation">
                 <?php if ( get_option( 'bp_group_documents_use_categories' ) ) { ?>
                     <div id="bp-group-documents-categories">
@@ -196,99 +287,10 @@ function bp_group_documents_display_content() {
 
 
 
-                            <?php
-                        }
-                        //-------------------------------------------------------------------DETAIL VIEW--
+                            <?php }
+			//-------------------------------------------------------------------DETAIL VIEW--
+				?> 
 
-                        if ( $template->show_detail ) {
-                            if ( $template->operation == 'add' ) {
-                                ?>
-                                <div id="bp-group-documents-upload-new">
-                                <?php } else { ?>
-                                    <div id="bp-group-documents-edit"><a name="edit-document-form"></a>
-                                    <?php } ?>
-
-                            <h3><?php echo $template->header ?></h3>
-
-                                        <form method="post" id="bp-group-documents-form" class="standard-form" action="<?php echo $template->action_link ; ?>" enctype="multipart/form-data">
-                                    <input type="hidden" name="bp_group_documents_operation" value="<?php echo $template->operation ; ?>" />
-                                    <input type="hidden" name="bp_group_documents_id" value="<?php echo $template->id ; ?>" />
-                                    <?php if ( $template->operation == 'add' ) : ?>
-                                        <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo return_bytes( ini_get( 'post_max_size' ) ) ; ?>" />
-                                        <label class="bp-group-documents-file-label"><?php _e( 'Choose File:' , 'bp-group-documents' ) ; ?></label>
-                                        <input type="file" name="bp_group_documents_file" class="bp-group-documents-file" />
-                                        <p class="bp-group-documents-valid-file-formats">
-                                            <?php
-                                            $valid_file_formats1 = get_option( 'bp_group_documents_valid_file_formats' ) ;
-                                            _e( 'Valid File Formats' , 'bp-group-documents' ) ;
-                                            echo ':<br />' . str_replace( ',' , ', ' , $valid_file_formats1 ) ;
-                                            ?>
-                                        </p>
-                                    <?php else: ?>
-                                        <label><?php _e( 'Document:' , 'bp-group-documents' ) ; ?>:</label><span><?php echo $template->name ; ?></span>
-
-                                        <?php
-                                        endif ;
-                                        if ( BP_GROUP_DOCUMENTS_FEATURED ) {
-                                            ?>
-                                            <label class="bp-group-documents-featured-label"><?php _e( 'Featured Document' , 'bp-group-documents' ) ; ?>: </label>
-                                            <input type="checkbox" name="bp_group_documents_featured" class="bp-group-documents-featured" value="1" <?php if ( $template->featured ) echo 'checked="checked"' ; ?>/>
-                                        <?php } ?>
-                                        <div id="document-detail-clear" class="clear"></div>
-                                        <div class="bp-group-documents-document-info">
-                                            <label><?php _e( 'Display Name:' , 'bp-group-documents' ) ; ?></label>
-                                            <input type="text" name="bp_group_documents_name" id="bp-group-documents-name" value="<?php echo $template->name ?>" />
-                                            <?php if ( BP_GROUP_DOCUMENTS_SHOW_DESCRIPTIONS ) { ?>
-                                                <label><?php _e( 'Description:' , 'bp-group-documents' ) ; ?></label>
-                                                <?php
-                                                if ( BP_GROUP_DOCUMENTS_ALLOW_WP_EDITOR ) :
-                                                    if ( function_exists( 'wp_editor' ) ) {
-                                                        wp_editor( $template->description , 'bp_group_documents_description' , array (
-                                                            'media_buttons' => false ,
-                                                            'dfw' => false ) ) ;
-                                                    } else
-                                                        the_editor( $template->description , 'bp_group_documents_description' , 'bp_group_documents_description' , false ) ;
-                                                else:
-                                                    ?>
-                                    <textarea name="bp_group_documents_description" id="bp-group-documents-description" rows="5" cols="100"><?php echo esc_textarea( $template->description ) ; ?></textarea>
-                                                <?php
-                                                endif ;
-                                            }
-                                            ?>
-                                    </div>
-
-                                    <?php if ( get_option( 'bp_group_documents_use_categories' ) ) { ?>
-                                        <div class="bp-group-documents-category-wrapper">
-                                            <label><?php _e( 'Category:' , 'bp-group-documents' ) ; ?></label>
-                                            <?php
-                                            $group_categories = $template->get_group_categories( false ) ;
-                                            if ( count( $group_categories ) > 0 ):
-                                                ?>
-                                                <div class="bp-group-documents-category-list">
-                                                    <ul>
-                                                        <?php foreach ( $template->get_group_categories( false ) as $category ) { ?>
-                                                            <li><input type="checkbox" name="bp_group_documents_categories[]" value="<?php echo $category->term_id ; ?>" <?php
-                                                                if ( $template->doc_in_category( $category->term_id ) )
-                                                                    echo 'checked="checked"' ;
-                                                                ?> /><?php echo $category->name ; ?></li>
-                                                            <?php } ?>
-                                                    </ul>
-                                                </div>
-                                            <?php endif ; ?>
-                                            <input type="text" name="bp_group_documents_new_category" class="bp-group-documents-new-category" />
-                                        </div><!-- .bp-group-documents-category-wrapper -->
-                                    <?php } ?>
-                                    <?php wp_nonce_field( 'bp_group_document_save_' . $template->operation , 'bp_group_document_save' ) ; ?>
-                                    <input type="submit" class="button" value="<?php _e( 'Save' , 'bp-group-documents' ) ; ?>" />
-                                </form>
-                                </div><!--end #post-new-topic-->
-
-                            <?php if ( $template->operation == 'add' ) { ?>
-                                <a class="button" id="bp-group-documents-upload-button" href="" style="display:none;"><?php _e( 'Upload a New Document' , 'bp-group-documents' ) ; ?></a>
-                                <?php
-                            }
-                        }
-                        ?>
 
                     </div><!--end #group-documents-->
                         <?php
