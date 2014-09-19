@@ -379,7 +379,7 @@ msgstr "%s veröffentlicht  in %s"
 
 #: C:\xampp\htdocs\blogsRun\wp-content\plugins\bp-group-documents/include/cssjs.php:18
 #, fuzzy
-msgid "New Category...!"
+msgid "New category"
 msgstr "%d neue Kommentare"
 
 #: C:\xampp\htdocs\blogsRun\wp-content\plugins\bp-group-documents/include/cssjs.php:19

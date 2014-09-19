@@ -357,7 +357,7 @@ msgid "In category:"
 msgstr "I kategorin:"
 
 #: C:\xampp\htdocs\blogsRun\wp-content\plugins\bp-group-documents/include/cssjs.php:20
-msgid "New Category...!"
+msgid "New category"
 msgstr "Ny kategori"
 
 #: C:\xampp\htdocs\blogsRun\wp-content\plugins\bp-group-documents/include/cssjs.php:21

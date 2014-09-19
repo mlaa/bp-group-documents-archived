@@ -379,8 +379,8 @@ msgstr ""
 
 #: C:\xampp\htdocs\blogsRun\wp-content\plugins\bp-group-documents/include/cssjs.php:20
 #, fuzzy
-msgid "New Category...!"
-msgstr "T&eacute;l&eacute;charger un nouveau document"
+msgid "New category"
+msgstr "Nouvelle catégorie"
 
 #: C:\xampp\htdocs\blogsRun\wp-content\plugins\bp-group-documents/include/cssjs.php:21
 msgid "You must select a file to upload!"

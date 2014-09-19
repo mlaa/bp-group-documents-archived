@@ -438,8 +438,8 @@ msgstr "In categorie:"
 
 # @ bp-group-documents
 #: C:\xampp\htdocs\blogsRun\wp-content\plugins\bp-group-documents/include/cssjs.php:20
-msgid "New Category...!"
-msgstr "Nieuwe categorie...!"
+msgid "New category"
+msgstr "Nieuwe categorie"
 
 # @ bp-group-documents
 #: C:\xampp\htdocs\blogsRun\wp-content\plugins\bp-group-documents/include/cssjs.php:21

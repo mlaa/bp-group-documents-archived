@@ -381,7 +381,7 @@ msgstr "Κατηγορία "
 
 #: C:\xampp\htdocs\blogsRun\wp-content\plugins\bp-group-documents/include/cssjs.php:20
 #, fuzzy
-msgid "New Category...!"
+msgid "New category"
 msgstr "Νέα κατηγορία...!"
 
 #: C:\xampp\htdocs\blogsRun\wp-content\plugins\bp-group-documents/include/cssjs.php:21
