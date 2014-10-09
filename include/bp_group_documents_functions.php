@@ -201,6 +201,21 @@ function bp_group_documents_display_content() {
                             if ( ++ $count % 2 )
                                 echo 'class="alt"' ;
                             ?> >
+
+					<?php
+				    //show edit and delete options if user is privileged
+				    echo '<div class="admin-links">' ;
+				    if ( $document->current_user_can( 'edit' ) ) {
+					    $edit_link = wp_nonce_url( $template->action_link . 'edit/' . $document->id , 'group-documents-edit-link' ) . '#edit-document-form' ;
+					    echo "<a href='$edit_link'>" . __( 'Edit' , 'bp-group-documents' ) . "</a> | " ;
+				    }
+				    if ( $document->current_user_can( 'delete' ) ) {
+					    $delete_link = wp_nonce_url( $template->action_link . 'delete/' . $document->id , 'group-documents-delete-link' ) ;
+					    echo "<a href='$delete_link' class='bp-group-documents-delete'>" . __( 'Delete' , 'bp-group-documents' ) . "</a>" ;
+				    }
+				    echo '</div>' ;
+					?> 
+
                                     <?php
                                     if ( get_option( 'bp_group_documents_display_icons' ) )
                                         $document->icon() ;
@@ -212,7 +227,11 @@ function bp_group_documents_display_content() {
                                             if ( get_option( 'bp_group_documents_display_file_size' ) ) {
                                                 echo ' <span class="group-documents-filesize">(' . get_file_size( $document ) . ')</span>' ;
                                             }
-                                            ?></a> &nbsp;<div class="bp-group-documents-meta">
+?></a> &nbsp;
+
+
+					<div class="bp-group-documents-meta">
+
                                             <?php
                                             $document->categories() ;
 
@@ -226,19 +245,7 @@ function bp_group_documents_display_content() {
                                                 }
                                                 ?>
                                         </div>
-                                        <?php
-                                        //show edit and delete options if user is privileged
-                                        echo '<div class="admin-links">' ;
-                                        if ( $document->current_user_can( 'edit' ) ) {
-                                            $edit_link = wp_nonce_url( $template->action_link . 'edit/' . $document->id , 'group-documents-edit-link' ) . '#edit-document-form' ;
-                                            echo "<a href='$edit_link'>" . __( 'Edit' , 'bp-group-documents' ) . "</a> | " ;
-                                        }
-                                        if ( $document->current_user_can( 'delete' ) ) {
-                                            $delete_link = wp_nonce_url( $template->action_link . 'delete/' . $document->id , 'group-documents-delete-link' ) ;
-                                            echo "<a href='$delete_link' class='bp-group-documents-delete'>" . __( 'Delete' , 'bp-group-documents' ) . "</a>" ;
-                                        }
-                            echo '</div>' ;
-
+					<?php
 
                                             if ( BP_GROUP_DOCUMENTS_SHOW_DESCRIPTIONS && $document->description ) {
                                                 echo '<span class="group-documents-description">' . wp_kses( $document->description , wp_kses_allowed_html( 'post' ) ) . '</span>' ;
