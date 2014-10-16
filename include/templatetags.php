@@ -76,6 +76,9 @@ class BP_Group_Documents_Template {
      * @version 1.2.2, 3/10/2013 stergatu, sanitize_text_field, add wp_verify
      */
     private function do_post_logic() {
+	    _log( 'get ready for the POOOOOOST!' ); 
+	    _log( $_POST ); 
+
         global $bp;
         if (isset($_POST['bp_group_documents_operation'])) {
             $nonce = $_POST['bp_group_document_save'];
@@ -86,9 +89,13 @@ class BP_Group_Documents_Template {
 
             do_action('bp_group_documents_template_do_post_action');
 
-            if (get_magic_quotes_gpc()) {
-                $_POST = array_map('stripslashes_deep', $_POST);
-            }
+
+            //if (get_magic_quotes_gpc()) {
+	    $_POST = array_map('stripslashes_deep', $_POST);
+            //}
+
+	    _log( 'now here\'s the post-post: ' ); 
+	    _log( $_POST ); 
 
             switch ($_POST['bp_group_documents_operation']) {
                 case 'add':

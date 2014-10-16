@@ -133,7 +133,7 @@ function bp_group_documents_display_content() {
                                         $document->icon() ;
                                     ?>
 
-                                                    <a class="bp-group-documents-title" id="group-document-link-<?php echo $document->id ; ?>" href="<?php $document->url() ; ?>" target="_blank"><?php echo esc_html( $document->name ) ; ?>
+                                                    <a class="bp-group-documents-title" id="group-document-link-<?php echo $document->id ; ?>" href="<?php $document->url() ; ?>" target="_blank"><?php echo esc_html( stripslashes( $document->name ) ) ; ?>
 
                                             <?php
                                             if ( get_option( 'bp_group_documents_display_file_size' ) ) {
@@ -168,7 +168,7 @@ function bp_group_documents_display_content() {
 
 
                                             if ( BP_GROUP_DOCUMENTS_SHOW_DESCRIPTIONS && $document->description ) {
-                                                echo '<span class="group-documents-description">' . wp_kses( $document->description , wp_kses_allowed_html( 'post' ) ) . '</span>' ;
+                                                echo '<span class="group-documents-description">' . wp_kses( stripslashes( $document->description ) , wp_kses_allowed_html( 'post' ) ) . '</span>' ;
                                             }
 
                                             //eleni add this in order to display the Addthis button on 3/2/2011
