@@ -1,7 +1,7 @@
 <?php
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) )
-    exit ;
+    exit;
 
 /**
  * @since version 0.5
@@ -15,8 +15,8 @@ if ( ! defined( 'ABSPATH' ) )
  * version 2.0 7/3/2013 Stergatu
  */
 function bp_group_documents_display() {
-    global $bp ;
-    bp_group_documents_display_content() ;
+    global $bp;
+    bp_group_documents_display_content();
 }
 
 /**
@@ -25,15 +25,15 @@ function bp_group_documents_display() {
  * @version 2.0, 13/5/2013, stergatu
  */
 function bp_group_documents_display_header() {
-    global $bp ;
-    $nav_page_name = get_option( 'bp_group_documents_nav_page_name' ) ;
+    global $bp;
+    $nav_page_name = get_option( 'bp_group_documents_nav_page_name' );
 
-    $name = ! empty( $nav_page_name ) ? $nav_page_name : __( 'Documents' , 'bp-group-documents' ) ;
-    _e( 'Group' ) . ' ' . $name ;
+    $name = ! empty( $nav_page_name ) ? $nav_page_name : __( 'Documents', 'bp-group-documents' );
+    _e( 'Group' ) . ' ' . $name;
 }
 
 function bp_group_documents_display_title() {
-    echo get_option( 'bp_group_documents_nav_page_name' ) . ' ' . __( 'List' , 'bp-group-documents' ) ;
+    echo get_option( 'bp_group_documents_nav_page_name' ) . ' ' . __( 'List', 'bp-group-documents' );
 }
 
 /* * **************************************************************************
@@ -47,13 +47,14 @@ function bp_group_documents_display_title() {
  * v2, 21/5/2013, stergatu, added documents categories
  */
 function bp_group_documents_display_content() {
-    global $bp ;
+    global $bp;
 
     //instanciating the template will do the heavy lifting with all the superglobal variables
-    $template = new BP_Group_Documents_Template() ;
+    $template = new BP_Group_Documents_Template();
     ?>
 
         <div id="bp-group-documents">
+<<<<<<< HEAD
 			<?php if ( $template->show_detail ) {
                             if ( $template->operation == 'add' ) {
                                 ?>
@@ -445,5 +446,4 @@ function bp_group_documents_display_content() {
                 setcookie( 'bp-group-documents-category' , $_GET[ 'category' ] , time() + 60 * 60 * 24 ) ;
             }
         }
-
         add_action( 'bp_group_documents_template_do_sorting_logic' , 'bp_group_documents_set_cookies' ) ;
