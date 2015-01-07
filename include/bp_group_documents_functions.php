@@ -54,7 +54,6 @@ function bp_group_documents_display_content() {
     ?>
 
         <div id="bp-group-documents">
-<<<<<<< HEAD
 			<?php if ( $template->show_detail ) {
                             if ( $template->operation == 'add' ) {
                                 ?>
